@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "678403560782",
+    "project_id": "cheeseauth-d2c1a",
+    "storage_bucket": "cheeseauth-d2c1a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:678403560782:android:1946c2648130e4b6e7ba1f",
+        "android_client_info": {
+          "package_name": "com.example.cheese_sheet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "678403560782-7cvt4aj1ckoens4mutur27apggiha1cg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cheese_sheet",
+            "certificate_hash": "b4d035e0493b8595c7784ee9bfc0ee23a1a624f0"
+          }
+        },
+        {
+          "client_id": "678403560782-bb5sj5d21vlku4aflrfmu3ctltivia2d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDR9SgD10RnT59cyuAJfHZy9XKeMTwYtao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "678403560782-bb5sj5d21vlku4aflrfmu3ctltivia2d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "678403560782-jju9og3fged2ocdmbae1ck1nfkoc9sma.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cheeseSheet"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

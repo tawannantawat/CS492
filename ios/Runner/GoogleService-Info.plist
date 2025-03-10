@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>678403560782-jju9og3fged2ocdmbae1ck1nfkoc9sma.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.678403560782-jju9og3fged2ocdmbae1ck1nfkoc9sma</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>678403560782-7cvt4aj1ckoens4mutur27apggiha1cg.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAiJGZSVQ0kW5YCuu7EMAJVisyGqU77ZQg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>678403560782</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.cheeseSheet</string>
+	<key>PROJECT_ID</key>
+	<string>cheeseauth-d2c1a</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cheeseauth-d2c1a.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:678403560782:ios:343c38b8bd372622e7ba1f</string>
+</dict>
+</plist>
