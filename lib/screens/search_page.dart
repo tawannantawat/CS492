@@ -19,7 +19,7 @@ class _SearchPageState extends State<SearchPage> {
   List<Map<String, dynamic>> mockLectures = [
     {
       'id': 'mock1',
-      'title': 'Data Structures Midterm',
+      'title': 'Test with no database',
       'university': 'มหาวิทยาลัยเชียงใหม่',
       'term': '1',
       'year': '2023',
@@ -27,28 +27,6 @@ class _SearchPageState extends State<SearchPage> {
       'price': 50,
       'rating': 4.5,
       'pdfUrl': 'assets/pdfs/data_structures_midterm.pdf',
-    },
-    {
-      'id': 'mock2',
-      'title': 'Algorithms Final',
-      'university': 'มหาวิทยาลัยกรุงเทพ',
-      'term': '2',
-      'year': '2024',
-      'type': 'Final',
-      'price': 100,
-      'rating': 4.0,
-      'pdfUrl': 'assets/pdfs/algorithms_final.pdf',
-    },
-    {
-      'id': 'mock3',
-      'title': 'Flutter Workshop',
-      'university': 'มหาวิทยาลัยเชียงใหม่',
-      'term': '3',
-      'year': '2022',
-      'type': 'อื่นๆ',
-      'price': 75,
-      'rating': 3.8,
-      'pdfUrl': 'assets/pdfs/flutter_workshop.pdf',
     },
   ];
 
@@ -116,7 +94,7 @@ class _SearchPageState extends State<SearchPage> {
                 }
 
                 List<Map<String, dynamic>> allLectures = [
-                  ...mockLectures,
+                  //...mockLectures,
                   ...snapshot.data!,
                 ];
 
