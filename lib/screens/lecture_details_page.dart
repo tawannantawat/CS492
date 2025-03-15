@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:cheese_sheet/screens/payment_page.dart';
@@ -58,8 +59,9 @@ class _LectureDetailsPageState extends State<LectureDetailsPage> {
 
   Future<void> _initiatePayment(BuildContext context) async {
     final String? lectureId = widget.lecture['id']?.toString();
+    final String? currentUserId = FirebaseAuth.instance.currentUser?.uid;
 
-    if (lectureId == null) {
+    if (lectureId == null || currentUserId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('ไม่สามารถซื้อ Lecture นี้ได้: ID เป็น null')),
       );
@@ -73,6 +75,7 @@ class _LectureDetailsPageState extends State<LectureDetailsPage> {
             'lecture_id': lectureId,
             'price': widget.lecture['price'],
             'status': 'pending',
+            'user_id': currentUserId, // ✅ เพิ่ม user_id ของผู้ซื้อ
           })
           .select()
           .single();

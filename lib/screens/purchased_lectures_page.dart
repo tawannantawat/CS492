@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cheese_sheet/screens/pdf_viewer_page.dart';
-import 'package:cheese_sheet/screens/chat_page.dart'; // ✅ Import หน้าแชท
+import 'package:cheese_sheet/screens/chat_page.dart';
 
 class PurchasedLecturesPage extends StatefulWidget {
   @override
@@ -15,7 +15,14 @@ class _PurchasedLecturesPageState extends State<PurchasedLecturesPage> {
   Future<List<Map<String, dynamic>>> _fetchPurchasedLectures() async {
     final response = await Supabase.instance.client
         .from('purchased_lectures')
-        .select('id, title, price, rating, pdfUrl, lecture_id');
+        .select(
+            'id, title, price, rating, pdfUrl, lecture_id, lectures(seller_id)')
+        .eq('user_id',
+            _currentUserId); // ✅ เพิ่มเงื่อนไขให้ดึงเฉพาะของ user นี้
+
+    if (response == null) {
+      throw 'เกิดข้อผิดพลาดในการโหลดข้อมูลจาก Supabase';
+    }
 
     return List<Map<String, dynamic>>.from(response);
   }
@@ -117,17 +124,6 @@ class _PurchasedLecturesPageState extends State<PurchasedLecturesPage> {
     );
   }
 
-  // ✅ ฟังก์ชันดึง seller_id เพื่อนำไปใช้แชท
-  Future<String?> _fetchSellerId(String lectureId) async {
-    final response = await Supabase.instance.client
-        .from('lectures')
-        .select('seller_id') // ✅ ต้องเพิ่ม seller_id ในตาราง lectures
-        .eq('id', lectureId)
-        .maybeSingle();
-
-    return response?['seller_id'];
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,6 +145,10 @@ class _PurchasedLecturesPageState extends State<PurchasedLecturesPage> {
             itemCount: lectures.length,
             itemBuilder: (context, index) {
               var lecture = lectures[index];
+
+              // ✅ ดึง seller_id จาก JSON โครงสร้าง lectures.seller_id
+              String? sellerId = lecture['lectures']?['seller_id'];
+
               return ListTile(
                 title: Text(lecture['title']),
                 subtitle: Text(
@@ -178,18 +178,15 @@ class _PurchasedLecturesPageState extends State<PurchasedLecturesPage> {
                       },
                     ),
                     IconButton(
-                      icon: Icon(Icons.chat, color: Colors.green), // ✅ ปุ่มแชท
-                      onPressed: () async {
-                        String? sellerId =
-                            await _fetchSellerId(lecture['lecture_id']);
-                        if (sellerId != null) {
+                      icon: Icon(Icons.chat, color: Colors.green),
+                      onPressed: () {
+                        if (sellerId != null && sellerId.isNotEmpty) {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => ChatPage(
                                 receiverId: sellerId,
-                                receiverName:
-                                    'Seller', // เปลี่ยนเป็นชื่อคนขายถ้ามี
+                                receiverName: 'Seller',
                               ),
                             ),
                           );

@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'package:cheese_sheet/screens/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SellPage extends StatefulWidget {
   @override
@@ -31,6 +33,16 @@ class _SellPageState extends State<SellPage> {
   }
 
   Future<void> _saveLecture() async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('คุณต้องเข้าสู่ระบบก่อนลงขาย')),
+      );
+      return;
+    }
+
+    String sellerId = currentUser.uid; // ✅ ใช้ user id ของผู้ขาย
+
     if (_formKey.currentState!.validate() && _pdfPath != null) {
       _formKey.currentState!.save();
       try {
@@ -63,17 +75,26 @@ class _SellPageState extends State<SellPage> {
             'price': double.parse(_price ?? '0'),
             'pdfUrl': pdfUrl,
             'rating': 0.0,
+            'seller_id': sellerId, // ✅ เพิ่ม seller_id
           }).select();
 
           if (insertResponse != null && insertResponse.isNotEmpty) {
+            if (mounted) {
+              Navigator.pop(context); // ✅ ปิด Dialog ถ้ายังอยู่ใน Widget
+            }
+
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text('Lecture "${_title}" ลงขายเรียบร้อยแล้ว!'),
                 backgroundColor: Color(0xFFF5C842),
               ),
             );
-            Navigator.pop(context);
-            Navigator.pop(context);
+
+            // ✅ แทนที่หน้าปัจจุบันด้วยหน้า MainPage
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => MainPage()),
+            );
           } else {
             throw 'เกิดข้อผิดพลาดในการบันทึกข้อมูลใน Supabase';
           }
@@ -81,7 +102,9 @@ class _SellPageState extends State<SellPage> {
           throw 'เกิดข้อผิดพลาดในการอัปโหลดไฟล์';
         }
       } catch (e) {
-        Navigator.pop(context);
+        if (mounted) {
+          Navigator.pop(context); // ✅ ปิด Dialog ก่อนแสดง Error
+        }
         print('Error: $e');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('เกิดข้อผิดพลาด: $e')),

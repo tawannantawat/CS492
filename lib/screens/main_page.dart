@@ -1,3 +1,4 @@
+import 'package:cheese_sheet/screens/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cheese_sheet/screens/search_page.dart';
 import 'package:cheese_sheet/screens/sell_page.dart';
@@ -14,6 +15,7 @@ class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final String currentUserId = FirebaseAuth.instance.currentUser?.uid ?? '';
 
   final List<Widget> _pages = [
     SearchPage(),
@@ -86,6 +88,16 @@ class _MainPageState extends State<MainPage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => PurchasedLecturesPage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings, color: Colors.blueAccent),
+              title: Text('Settings'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SettingsPage()),
                 );
               },
             ),

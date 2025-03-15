@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -52,6 +53,14 @@ class _PaymentPageState extends State<PaymentPage> {
   }
 
   Future<void> _addToPurchasedLectures() async {
+    final String? currentUserId = FirebaseAuth.instance.currentUser?.uid;
+
+    if (currentUserId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('เกิดข้อผิดพลาด: ไม่พบข้อมูลผู้ใช้')),
+      );
+      return;
+    }
     try {
       // ดึงข้อมูล Lecture จากตาราง lectures โดยใช้ lecture_id
       final response = await Supabase.instance.client
@@ -64,6 +73,7 @@ class _PaymentPageState extends State<PaymentPage> {
         await Supabase.instance.client.from('purchased_lectures').insert({
           'lecture_id': widget.lectureId,
           'order_id': widget.orderId,
+          'user_id': currentUserId,
           'title': response['title'],
           'university': response['university'],
           'term': response['term'],
@@ -125,14 +135,14 @@ class _PaymentPageState extends State<PaymentPage> {
                   SizedBox(height: 20),
                   Text('กรุณาสแกน QR Code เพื่อชำระเงิน'),
                   SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: _simulatePayment,
-                    child: Text('จำลองการชำระเงิน'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Colors.orange, // ✅ ใช้ backgroundColor แทน primary
-                    ),
-                  ),
+                  // ElevatedButton(
+                  //   onPressed: _simulatePayment,
+                  //   child: Text('จำลองการชำระเงิน'),
+                  //   style: ElevatedButton.styleFrom(
+                  //     backgroundColor:
+                  //         Colors.orange, // ✅ ใช้ backgroundColor แทน primary
+                  //   ),
+                  // ),
                 ],
               )
             : Column(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:supabase_flutter/supabase_flutter.dart'; // ✅ เพิ่ม Supabase
 import 'package:cheese_sheet/screens/main_page.dart';
 import 'package:cheese_sheet/screens/sign_up_page.dart';
 
@@ -14,6 +15,35 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  // ✅ ฟังก์ชันเพิ่มข้อมูลผู้ใช้ใน Supabase
+  Future<void> _syncUserToDatabase() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return; // 🛑 ถ้าไม่มีผู้ใช้ล็อกอิน ไม่ต้องทำอะไร
+
+    final supabase = Supabase.instance.client;
+
+    // ✅ ตรวจสอบว่ามี user นี้อยู่ใน Supabase แล้วหรือยัง
+    final response = await supabase
+        .from('users')
+        .select('id')
+        .eq('id', user.uid)
+        .maybeSingle();
+
+    if (response == null) {
+      // 🔹 ถ้ายังไม่มี ให้เพิ่มข้อมูลผู้ใช้ลงไป
+      await supabase.from('users').insert({
+        'id': user.uid,
+        'email': user.email,
+        'display_name': user.displayName ?? 'User ${user.uid.substring(0, 6)}',
+        'created_at': DateTime.now().toIso8601String(),
+      });
+
+      print("✅ เพิ่มผู้ใช้ใหม่ใน Supabase: ${user.email}");
+    } else {
+      print("🔄 ผู้ใช้มีอยู่แล้วใน Supabase: ${user.email}");
+    }
+  }
+
   Future<void> _signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -25,13 +55,16 @@ class _LoginPageState extends State<LoginPage> {
           idToken: googleAuth.idToken,
         );
         await _auth.signInWithCredential(credential);
+
+        await _syncUserToDatabase(); // ✅ เพิ่มผู้ใช้ใน Supabase
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => MainPage()),
         );
       }
     } catch (e) {
-      print(e);
+      print("❌ Google Sign-In Error: $e");
     }
   }
 
@@ -41,12 +74,15 @@ class _LoginPageState extends State<LoginPage> {
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
+
+      await _syncUserToDatabase(); // ✅ เพิ่มผู้ใช้ใน Supabase
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MainPage()),
       );
     } catch (e) {
-      print(e);
+      print("❌ Email Sign-In Error: $e");
     }
   }
 
