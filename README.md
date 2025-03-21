@@ -1,16 +1,28 @@
 # cheese_sheet
 
-A new Flutter project.
+# Required Tools for Running the Project
 
-## Getting Started
+This project is developed using Flutter. To run the code, you need to install the following tools:
 
-This project is a starting point for a Flutter application.
+- **[Flutter SDK](https://flutter.dev/docs/get-started/install)**
+- **Android Studio** (For device emulation and code management)
+- **Java Development Kit (JDK)** (For compiling Android applications)
+- **Git** (For cloning the repository)
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# How to Run the Project
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+To run the project, use the following commands in Terminal or Command Prompt:
+
+```sh
+# Clone the project from GitHub
+git clone https://github.com/tawannantawat/CS492.git
+cd CS492
+
+# Install dependencies
+flutter pub get
+
+# Run the application
+flutter run
+
