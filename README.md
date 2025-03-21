@@ -29,3 +29,34 @@ flutter pub get
 
 # Run the application
 flutter run
+
+🔥 Firebase Configuration
+Before running the project, you must correctly set up Firebase, or the app will not connect to the backend.
+
+Steps to Set Up Firebase
+Go to the Firebase Console
+Create a new project and add an application for Android and iOS
+Download the configuration files:
+📂 For Android → google-services.json
+📂 For iOS → GoogleService-Info.plist
+Place the files inside:
+🗂 Android → android/app/
+🗂 iOS → iOS/Runner/
+Use Firebase CLI to connect the project to Firebase.
+📖 For more details, check the official docs:
+🔗 Firebase Flutter Setup
+
+🛠 Supabase Configuration
+This project uses Supabase for database and storage. Follow these steps to configure it:
+
+Steps to Set Up Supabase
+Go to the Supabase Console
+Create a new project and copy:
+🌍 Project URL
+🔑 Anon/Public API Key
+Paste these values into:
+📄 lib/config.dart
+📄 .env
+Use Supabase CLI to manage the database.
+📖 For more details, check the official docs:
+🔗 Supabase Getting Started
