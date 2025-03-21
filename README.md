@@ -29,34 +29,44 @@ flutter pub get
 
 # Run the application
 flutter run
+```
 
-🔥 Firebase Configuration
-Before running the project, you must correctly set up Firebase, or the app will not connect to the backend.
+---
 
-Steps to Set Up Firebase
-Go to the Firebase Console
-Create a new project and add an application for Android and iOS
-Download the configuration files:
-📂 For Android → google-services.json
-📂 For iOS → GoogleService-Info.plist
-Place the files inside:
-🗂 Android → android/app/
-🗂 iOS → iOS/Runner/
-Use Firebase CLI to connect the project to Firebase.
-📖 For more details, check the official docs:
-🔗 Firebase Flutter Setup
+## 🔥 Firebase Configuration
 
-🛠 Supabase Configuration
-This project uses Supabase for database and storage. Follow these steps to configure it:
+Before running the project, you must correctly set up **Firebase**, or the app will not connect to the backend.
 
-Steps to Set Up Supabase
-Go to the Supabase Console
-Create a new project and copy:
-🌍 Project URL
-🔑 Anon/Public API Key
-Paste these values into:
-📄 lib/config.dart
-📄 .env
-Use Supabase CLI to manage the database.
-📖 For more details, check the official docs:
-🔗 Supabase Getting Started
+### **Steps to Set Up Firebase**
+1. Go to the **[Firebase Console](https://console.firebase.google.com/)**
+2. Create a new project and add an application for **Android and iOS**
+3. Download the configuration files:
+   - 💂 **For Android** → [`google-services.json`](https://firebase.google.com/docs/flutter/setup?platform=android)
+   - 💂 **For iOS** → [`GoogleService-Info.plist`](https://firebase.google.com/docs/flutter/setup?platform=ios)
+4. Place the files inside:
+   - 🗂 **Android** → `android/app/`
+   - 🗂 **iOS** → `iOS/Runner/`
+5. Use **[Firebase CLI](https://firebase.google.com/docs/cli)** to connect the project to Firebase.
+
+📚 **For more details, check the official docs:**  
+🔗 **[Firebase Flutter Setup](https://firebase.google.com/docs/flutter/setup)**
+
+---
+
+## 🛠 Supabase Configuration
+
+This project uses **Supabase** for database and storage. Follow these steps to configure it:
+
+### **Steps to Set Up Supabase**
+1. Go to the **[Supabase Console](https://supabase.com/dashboard)**
+2. Create a new project and copy:
+   - 🌐 **Project URL**
+   - 🔑 **Anon/Public API Key**
+3. Paste these values into:
+   - 📄 `lib/config.dart`
+   - 📄 `.env`
+4. Use **[Supabase CLI](https://supabase.com/docs/guides/cli)** to manage the database.
+
+📚 **For more details, check the official docs:**  
+🔗 **[Supabase Getting Started](https://supabase.com/docs/guides/getting-started)**
+
